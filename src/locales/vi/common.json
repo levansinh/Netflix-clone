@@ -1,0 +1,13 @@
+{
+  "title_home_page": "Trang Chủ",
+  "title_login_page": "Trang Đăng Nhập",
+  "title_signup_page": "Trang Đăng Ký",
+  "title_error_page": " Trang Lỗi",
+  "title_internal_server_error_page": "Trang Lỗi Máy Chủ Nội Bộ",
+  "title_not_found_page": "Trang Không Tìm Thấy",
+  "title_unauthorized_page": "Trang Không Được Phép",
+  "title_forbidden_page": "Trang Bị Cấm",
+  "title_profile_page": "Trang Hồ Sơ",
+  "title_settings_page": "Trang Cài Đặt",
+  "title_dashboard_page": "Trang Bảng Điều Khiển"
+}

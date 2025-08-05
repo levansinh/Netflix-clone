@@ -1,0 +1,13 @@
+{
+  "title_home_page": "Home Page",
+  "title_login_page": "Login Page",
+  "title_signup_page": "Sign Up Page",
+  "title_error_page": "Error Page",
+  "title_internal_server_error_page": "Internal Server Error Page",
+  "title_not_found_page": "Not Found Page",
+  "title_unauthorized_page": "Unauthorized Page",
+  "title_forbidden_page": "Forbidden Page",
+  "title_profile_page": "Profile Page",
+  "title_settings_page": "Settings Page",
+  "title_dashboard_page": "Dashboard Page"
+}
