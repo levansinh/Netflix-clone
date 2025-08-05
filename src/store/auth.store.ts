@@ -15,11 +15,11 @@ interface IAuthStore {
   fetchingUser: boolean;
 
   actions: {
-    signup: (
-      username: string,
-      email: string,
-      password: string
-    ) => Promise<void>;
+    signup: (user: {
+      username: string;
+      email: string;
+      password: string;
+    }) => void;
     login: (user: { username: string; email: string }, message: string) => void;
     fetchUser: () => Promise<void>;
     logout: () => Promise<{ message: string }>;
@@ -34,24 +34,10 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   fetchingUser: true,
 
   actions: {
-    signup: async (username, email, password) => {
+    signup: async (user) => {
       set({ message: null });
 
-      try {
-        const response = await axios.post(`${API_URL}/signup`, {
-          username,
-          email,
-          password
-        });
-
-        set({ user: response.data.user });
-      } catch (error: AxiosError | any) {
-        set({
-          error: error.response.data.message || 'Error Signing up'
-        });
-
-        throw error;
-      }
+      set({ user });
     },
 
     login: (user, message) =>

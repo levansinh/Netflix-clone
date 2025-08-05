@@ -1,5 +1,5 @@
 export const AUTH_URL = {
-  LOGIN: '/login',
+  LOGIN: '/signin',
   SIGNUP: '/signup'
 };
 

@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useAuthStore } from '../store/authStore';
-import toast from 'react-hot-toast';
+import { FormProvider, useForm } from 'react-hook-form';
+import InputValidation from '@/components/ui/Input/InputValidation';
+import { useSignup } from '../apis/signup.api';
+import { toast } from 'react-toastify';
 
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { login, isLoading, error } = useAuthStore();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const { message } = await login(username, password);
-      toast.success(message);
-      navigate('/');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const methods = useForm({
+    defaultValues: { username: '', email: '', password: '' }
+  });
+
+  const { handleSubmit } = methods;
+
+  const { mutate, isLoading } = useSignup();
+  const submitHandler = handleSubmit((values) => {
+    mutate(values, {
+      onSuccess: () => {
+        navigate('/');
+      },
+      onError: () => {
+        toast.error('Signup failed. Please try again.');
+      }
+    });
+  });
 
   return (
     <div
@@ -29,43 +34,45 @@ const SignIn = () => {
       }}
     >
       <div className='max-w-[450px] w-full bg-black bg-opacity-75 rounded px-8 py-14 mx-auto mt-8'>
-        <h1 className='text-3xl font-medium text-white mb-7'>Sign In</h1>
+        <h1 className='text-3xl font-medium text-white mb-7'>Sign Up</h1>
+        <FormProvider {...methods}>
+          <form onSubmit={submitHandler} className='flex flex-col space-y-4'>
+            <InputValidation
+              name='username'
+              id='username'
+              placeholder='Username'
+            />
+            <InputValidation
+              name='email'
+              id='email'
+              placeholder='Email'
+              type='email'
+            />
+            <InputValidation
+              name='password'
+              id='password'
+              placeholder='Password'
+              type='password'
+            />
 
-        <form onSubmit={handleLogin} className='flex flex-col space-y-4'>
-          <input
-            type='text'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder='username'
-            className='w-full h-[50px] bg-[#333] text-white rouded px-5 text-base'
-          />
-          <input
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder='password'
-            className='w-full h-[50px] bg-[#333] text-white rouded px-5 text-base'
-          />
-
-          {error && <p className='text-red-500'>{error}</p>}
-
-          <button
-            type='submit'
-            disabled={isLoading}
-            className='w-full bg-[#e50914] text-white py-2 rounded text-base hover:opacity-90 cursor-pointer'
-          >
-            Sign In
-          </button>
-        </form>
+            <button
+              type='submit'
+              disabled={isLoading}
+              className='w-full bg-[#e50914] text-white py-2 rounded text-base hover:opacity-90 cursor-pointer'
+            >
+              Sign Up
+            </button>
+          </form>
+        </FormProvider>
 
         <div className='mt-10 text-[#737373] text-sm'>
           <p>
-            New to Netflix?{' '}
+            Already have an account?
             <span
-              onClick={() => navigate('/signup')}
+              onClick={() => navigate('/signin')}
               className='text-white font-medium cursor-pointer ml-2 hover:underline'
             >
-              Sign Up Now
+              Sign In Now
             </span>
           </p>
         </div>
@@ -74,4 +81,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
